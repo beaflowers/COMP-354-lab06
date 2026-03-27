@@ -38,8 +38,8 @@ public class IntQueueTest {
     @Before
     public void setUp() {
         // comment/uncomment these lines to test each class
-        mQueue = new LinkedIntQueue();
-    //    mQueue = new ArrayIntQueue();
+    //    mQueue = new LinkedIntQueue();
+        mQueue = new ArrayIntQueue();
 
         testList = new ArrayList<>(List.of(1, 2, 3));
     }
@@ -53,20 +53,26 @@ public class IntQueueTest {
     @Test
     public void testNotEmpty() {
         // TODO: write your own unit test
-        fail("Test not implemented");
+
+        mQueue.enqueue(testList.get(0));
+        assertFalse(mQueue.isEmpty());
     }
 
     @Test
     public void testPeekEmptyQueue() {
         // TODO: write your own unit test
-        fail("Test not implemented");
+        assertNull(mQueue.peek());
     }
 
     @Test
-    public void testPeekNoEmptyQueue() {
-        // TODO: write your own unit test
-        fail("Test not implemented");
-    }
+public void testPeekNoEmptyQueue() {
+    // Enqueue an element to make the queue non-empty
+    mQueue.enqueue(testList.get(0));  // Adds 1
+    
+    // Now test peek on a non-empty queue
+    assertEquals(testList.get(0), mQueue.peek());  // Should return 1 without removing it
+    assertEquals(1, mQueue.size()); 
+}
 
     @Test
     public void testEnqueue() {
@@ -80,8 +86,23 @@ public class IntQueueTest {
 
     @Test
     public void testDequeue() {
-        // TODO: write your own unit test
-        fail("Test not implemented");
+        // Test dequeue on empty queue
+        assertNull(mQueue.dequeue());
+        
+        // Enqueue elements
+        for (int i = 0; i < testList.size(); i++) {
+            mQueue.enqueue(testList.get(i));
+        }
+        
+        // Dequeue and verify FIFO order
+        for (int i = 0; i < testList.size(); i++) {
+            assertEquals(testList.get(i), mQueue.dequeue());
+            assertEquals(testList.size() - 1 - i, mQueue.size());
+        }
+        
+        // Queue should be empty after dequeuing all
+        assertTrue(mQueue.isEmpty());
+        assertNull(mQueue.dequeue());  // Dequeue on empty again
     }
 
     @Test
