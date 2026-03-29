@@ -67,7 +67,7 @@ public class IntQueueTest {
     @Test
 public void testPeekNoEmptyQueue() {
     // Enqueue an element to make the queue non-empty
-    mQueue.enqueue(testList.get(0));  // Adds 1
+    mQueue.enqueue(testList.get(0));  
     
     // Now test peek on a non-empty queue
     assertEquals(testList.get(0), mQueue.peek());  // Should return 1 without removing it
@@ -83,6 +83,19 @@ public void testPeekNoEmptyQueue() {
             assertEquals(i + 1, mQueue.size());
         }
     }
+
+    @Test
+public void testResizeOnEnqueue() {
+    for (int i = 0; i < 20; i++) {
+        mQueue.enqueue(i);
+    }
+    assertEquals(20, mQueue.size());
+    assertEquals(0, (int) mQueue.peek());
+    for (int i = 0; i < 20; i++) {
+        assertEquals(Integer.valueOf(i), mQueue.dequeue());
+    }
+    assertTrue(mQueue.isEmpty());
+}
 
     @Test
     public void testDequeue() {
